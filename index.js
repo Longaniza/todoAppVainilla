@@ -7,11 +7,17 @@ const uiManagement = (() => {
                 elemento.parentNode.removeChild(elemento);
                 data.deleteTodo(todo);
             })
+
+            document.getElementById(todo.id).querySelector(".update-button").addEventListener("click", () => {
+               const newValue = document.getElementById(todo.id).querySelector(".label-look").value;
+               data.updateTodo(todo,newValue);
+
+            })
         })
     }
     const add = (todo) => {
         document.getElementById("lista").innerHTML += '<div id="' + todo.id+ '"><input type="text" class="label-look" value="' + todo.value +
-        '"> <button type="button">Edit</button> <button class="delete-button" type="button">Borrar</button> <br></div>'
+        '"> <button type="button" class="update-button">Edit</button> <button class="delete-button" type="button">Borrar</button> <br></div>'
     }
     return {
         add,
@@ -30,25 +36,37 @@ const data = (() => {
    
    const getTodos = () => {
     return todos;
-    }
+    };
 
    const add = (todo) => {
        uiManagement.add(todo);
        todos.push(todo);
        localStorage.setItem('todos',JSON.stringify(getTodos()));
        uiManagement.addEvents(todos);
-   }
+   };
    const deleteTodo = (todo) => {
         const todoIdx = todos.map(element => element.id).indexOf(todo.id);
         todos.splice(todoIdx, 1);
         localStorage.setItem('todos',JSON.stringify(getTodos()));
-    }
+    };
+    const updateTodo = (todo,newValue) => {
+        console.log(todo);
+        console.log(newValue);
+        const todoIdx = todos.map(element => element.id).indexOf(todo.id);
+        todos[todoIdx] = {
+            id:todo.id,
+            value:newValue
+        }
+        localStorage.setItem('todos',JSON.stringify(getTodos()));
+    };
+
 
    
    return {
        add,
        getTodos,
-       deleteTodo
+       deleteTodo,
+       updateTodo
    } 
 })();
 
