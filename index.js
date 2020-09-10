@@ -1,5 +1,12 @@
 const uiManagement = (() => {
-
+    document.getElementById("add-todo").addEventListener("click", (event) => {
+        event.preventDefault();
+        const todo = {
+            id: Math.floor(Math.random() * Math.floor(Math.random() * Date.now())),
+            value:document.querySelector("#fname").value 
+        }
+        data.add(todo);
+    });
     const addEvents = (todos) => {
         todos.forEach(todo => {
             document.getElementById(todo.id).querySelector(".delete-button").addEventListener("click", () => {
@@ -16,8 +23,8 @@ const uiManagement = (() => {
         })
     }
     const add = (todo) => {
-        document.getElementById("lista").innerHTML += '<div id="' + todo.id+ '"><input type="text" class="label-look" value="' + todo.value +
-        '"> <button type="button" class="update-button">Edit</button> <button class="delete-button" type="button">Borrar</button> <br></div>'
+        document.getElementById("lista").innerHTML += '<div class="todo-segment" id="' + todo.id+ '"><input type="text" class="label-look" value="' + todo.value +
+        '"> <button type="button" class="update-button button">EDIT</button> <button class="delete-button button" type="button">DELETE</button> <br></div>'
     }
     return {
         add,
@@ -59,9 +66,6 @@ const data = (() => {
         }
         localStorage.setItem('todos',JSON.stringify(getTodos()));
     };
-
-
-   
    return {
        add,
        getTodos,
@@ -73,12 +77,3 @@ const data = (() => {
 
 
 
-
-document.getElementById("add-todo").addEventListener("click", (event) => {
-    event.preventDefault();
-    const todo = {
-        id: Math.floor(Math.random() * Math.floor(Math.random() * Date.now())),
-        value:document.querySelector("#fname").value 
-    }
-    data.add(todo);
-});
